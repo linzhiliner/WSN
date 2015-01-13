@@ -30,13 +30,13 @@
 
 		<!-- ÅäÖÃAction -->
 	<action name="sensor" 
-			class="com.huawei.action.SensorAction" method="sensorList">	
+			class="ll.action.SensorAction" method="sensorList">	
 			<result type="json" >
 			</result>
 		</action>
 		
 	<action name="highcharts" 
-			class="com.huawei.action.SensorAction" method="list">	
+			class="ll.action.SensorAction" method="list">	
 			<result type="json" >
 			</result>
 		</action>	

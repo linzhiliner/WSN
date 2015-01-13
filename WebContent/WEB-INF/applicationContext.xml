@@ -35,7 +35,7 @@
 		<property name="mappingResources">
 			<list>
 				<!-- 以下用来列出Hibernate映射文件 -->
-				<value>com/huawei/domain/Sensor.hbm.xml</value>
+				<value>ll/domain/Sensor.hbm.xml</value>
 			</list>
 		</property>
 		<!-- 定义Hibernate的SessionFactory的属性 -->
@@ -89,12 +89,12 @@
 	<!-- 定义业务逻辑组件，继承业务逻辑组件的模板 -->	
 	
 	<bean id="sensorService"
-		class="com.huawei.service.impl.SensorServiceImpl">
+		class="ll.service.impl.SensorServiceImpl">
 		<property name="dao" ref="dao"></property>
 	</bean>
 	
 	<bean id="service"
-		class="com.huawei.service.impl.ServiceImpl">
+		class="ll.service.impl.ServiceImpl">
 		<property name="dao" ref="dao"></property>
 	</bean>		
 

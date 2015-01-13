@@ -10,7 +10,7 @@
 		p:sessionFactory-ref="sessionFactory"/>
 
 	<bean id="dao"
-		class="com.huawei.dao.impl.DaoImpl"
+		class="ll.dao.impl.DaoImpl"
 		parent="daoTemplate"/>
 
 
