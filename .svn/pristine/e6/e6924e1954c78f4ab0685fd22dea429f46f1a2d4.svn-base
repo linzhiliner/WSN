@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.huawei.domain">
+	<class	name="ShopInfo"	table="tb_shopInfo">
+		<!-- 映射标识属性 -->
+		<id	name="id" type="long" column="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="native"/>
+		</id>
+	    <!-- 映射普通属性 -->
+	    <many-to-one name="registerUser" column="seller_id" class="RegisterUser"/>
+	    <property name="introduction" column="introduction" type="string" />
+	    <property name="shopName" column="shopName" type="string" />
+ 		<property name="address" column="address" type="string" />
+ 		<property name="tel" column="tel" type="string" />
+        <property name="latitude" column="latitude" type = "double"/>
+        <property name="longitude" column="longitude" type = "double"/> 
+        <property name="img" column="img" type="string" />	
+        <property name="miniImg" column="miniimg" type="string" />		
+ 		 <property name="dateCreated" type="timestamp" not-null="true">
+			<column name = "dateCreated" sql-type="datetime"/>
+		</property>	
+	</class>
+</hibernate-mapping>

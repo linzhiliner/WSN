@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Spring配置文件的Schema信息 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- 定义数据源Bean，使用C3P0数据源实现 -->
+	<!-- 设置连接数据库的驱动、URL、用户名、密码
+		连接池最大连接数、最小连接数、初始连接数等参数 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close"
+		p:driverClass="com.mysql.jdbc.Driver"
+		p:jdbcUrl="jdbc:mysql://localhost:3306/youxin"
+		p:user="root"
+		p:password="123456"
+		p:maxPoolSize="200"
+		p:minPoolSize="1"
+		p:initialPoolSize="50"
+		p:maxIdleTime="20"/>
+
+	<!-- 定义Hibernate的SessionFactory -->
+	<!-- 依赖注入数据源，注入正是上面定义的dataSource -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+		p:dataSource-ref="dataSource">
+		<!-- mappingResouces属性用来列出全部映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<!-- 以下用来列出Hibernate映射文件 -->
+				<value>com/huawei/domain/RegisterUser.hbm.xml</value>
+				<value>com/huawei/domain/Friend.hbm.xml</value>
+				<value>com/huawei/domain/Focus.hbm.xml</value>
+				<value>com/huawei/domain/WeiBo.hbm.xml</value>
+				<value>com/huawei/domain/ShopBlog.hbm.xml</value>
+				<value>com/huawei/domain/ShopInfo.hbm.xml</value>
+				<value>com/huawei/domain/Tag.hbm.xml</value>
+				<value>com/huawei/domain/Coupon.hbm.xml</value>
+				<value>com/huawei/domain/ExchangedCou.hbm.xml</value>
+				<value>com/huawei/domain/Comment.hbm.xml</value>
+				<value>com/huawei/domain/FriendApply.hbm.xml</value>
+				<value>com/huawei/domain/Group.hbm.xml</value>
+				<value>com/huawei/domain/GroupInvatation.hbm.xml</value>
+				<value>com/huawei/domain/GroupMember.hbm.xml</value>
+				<value>com/huawei/domain/ReadMessage.hbm.xml</value>
+				<value>com/huawei/domain/ShopComment.hbm.xml</value>
+				<value>com/huawei/domain/Topic.hbm.xml</value>
+				<value>com/huawei/domain/TopicInfo.hbm.xml</value>
+				<value>com/huawei/domain/UnreadMessage.hbm.xml</value>
+				<value>com/huawei/domain/Role.hbm.xml</value>
+				<value>com/huawei/domain/UserType.hbm.xml</value>
+				<value>com/huawei/domain/UserGroupTag.hbm.xml</value>
+				<value>com/huawei/domain/Faq.hbm.xml</value>
+				<value>com/huawei/domain/Notification.hbm.xml</value>
+				<value>com/huawei/domain/Sensor.hbm.xml</value>
+			</list>
+		</property>
+		<!-- 定义Hibernate的SessionFactory的属性 -->
+		<property name="hibernateProperties">
+			<!-- 指定数据库方言、是否自动建表
+				是否生成SQL语句等 	-->
+			<value>
+			hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+			hibernate.hbm2ddl.auto=update
+			hibernate.show_sql=true
+			hibernate.format_sql=true
+			#开启二级缓存
+			hibernate.cache.use_second_level_cache=true
+			#设置二级缓存的提供者
+			hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+			</value>
+		</property>
+	</bean>
+
+	<!-- 配置Hibernate的局部事务管理器，使用HibernateTransactionManager类 -->
+	<!-- 该类实现PlatformTransactionManager接口，是针对Hibernate的特定实现-->
+	<!-- 并注入SessionFactory的引用 -->
+	<bean id="transactionManager" class=
+		"org.springframework.orm.hibernate3.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory"/>
+
+	<!-- 配置事务增强处理Bean,指定事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 用于配置详细的事务语义 -->
+		<tx:attributes>
+			<!-- 所有以'get'开头的方法是read-only的 -->
+			<tx:method name="get*" read-only="true"/>
+			<!-- 其他方法使用默认的事务设置 -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!-- 配置一个切入点，匹配empManager和mgrManager
+			两个Bean的所有方法的执行 -->
+		<aop:pointcut id="leePointcut" 
+
+	
+		expression="bean(registerUserService) || bean(sensorService) || bean(focusService)  || bean(shopBlogService) || bean(userGroupTagService) || bean(shopInfoService) || bean(tagService) || bean(couponService) || bean(exchangedCouService) || bean(friendService) || bean(friendApplyService) ||  bean(readMessageService) || bean(roleService) || bean(shopCommentService) || bean(topicInfoService) || bean(topicService) || bean(unreadMessageService) || bean(userTypeService)|| bean(exchangedCouService)||bean(groupService)||bean(groupInvatationService)||bean(groupMemberService)|| bean(commentService) || bean(weiBoService)|| bean(faqService)|| bean(notificationService)"/>
+		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
+		<!-- || bean(groupService) 后续增加  -->
+		<aop:advisor advice-ref="txAdvice" 
+			pointcut-ref="leePointcut"/>
+	</aop:config>
+
+
+	<!-- 定义业务逻辑组件，继承业务逻辑组件的模板 -->
+
+	<bean id="registerUserService"
+		class="com.huawei.service.impl.RegisterUserServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="notificationService" ref="notificationService"></property>
+		<property name="shopInfoService" ref="shopInfoService"></property>
+	</bean>
+	
+	
+	<bean id="sensorService"
+		class="com.huawei.service.impl.SensorServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="focusService"
+		class="com.huawei.service.impl.FocusServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="weiBoService"
+		class="com.huawei.service.impl.WeiBoServiceImpl">
+		<property name="notificationService" ref="notificationService"></property>
+		<property name="dao" ref="dao"></property>
+	</bean>	
+	<bean id="shopBlogService"
+		class="com.huawei.service.impl.ShopBlogServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>			
+
+	
+	<bean id="userGroupTagService"
+		class="com.huawei.service.impl.UserGroupTagServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="shopInfoService"
+		class="com.huawei.service.impl.ShopInfoServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="tagService"
+		class="com.huawei.service.impl.TagServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="couponService"
+		class="com.huawei.service.impl.CouponServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>	
+	<bean id="exchangedCouService"
+		class="com.huawei.service.impl.ExchangedCouServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="couponService" ref="couponService"></property>
+	</bean>		
+  	
+	<bean id="commentService"
+		class="com.huawei.service.impl.CommentServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="weiBoService" ref="weiBoService"></property>
+		<property name="notificationService" ref="notificationService"></property>
+	</bean>	
+	<bean id="friendService"
+		class="com.huawei.service.impl.FriendServiceImpl">
+		<property name="dao" ref="dao"></property>
+		
+	</bean>		
+	<bean id="friendApplyService"
+		class="com.huawei.service.impl.FriendApplyServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="notificationService" ref="notificationService"></property>
+	</bean>		
+	<bean id="groupInvatationService"
+		class="com.huawei.service.impl.GroupInvatationServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="groupMemberService"
+		class="com.huawei.service.impl.GroupMemberServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="groupService"
+		class="com.huawei.service.impl.GroupServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="readMessageService"
+		class="com.huawei.service.impl.ReadMessageServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="roleService"
+		class="com.huawei.service.impl.RoleServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="shopCommentService"
+		class="com.huawei.service.impl.ShopCommentServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="notificationService" ref="notificationService"></property>
+	</bean>			
+	<bean id="topicInfoService"
+		class="com.huawei.service.impl.TopicInfoServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>	
+	<bean id="topicService"
+		class="com.huawei.service.impl.TopicServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>	
+	<bean id="unreadMessageService"
+		class="com.huawei.service.impl.UnreadMessageServiceImpl">
+		<property name="dao" ref="dao"></property>
+		<property name="readMessageService" ref="readMessageService"></property>
+	</bean>		
+	<bean id="userTypeService"
+		class="com.huawei.service.impl.UserTypeServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="faqService"
+		class="com.huawei.service.impl.FaqServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="notificationService"
+		class="com.huawei.service.impl.NotificationServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+	<bean id="service"
+		class="com.huawei.service.impl.ServiceImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>		
+
+		<!-- 注意要记得配置 expression="bean(registerUserService)" 这个 -->
+		
+</beans>

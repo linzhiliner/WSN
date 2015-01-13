@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Hibernate映射文件的根元素 -->
+<hibernate-mapping package="com.huawei.domain">
+	<class	name="RegisterUser"	table="tb_RegisterUser">
+		<!-- 映射标识属性 -->
+		<id	name="id" type="long" column="id">
+			<!-- 指定使用identity主键生成策略 -->
+			<generator class="native"/>
+		</id>
+		<!-- 映射普通属性 -->
+		<property name="userName" column="userName"
+			type="string" not-null="true" />
+		<property name="password" column="password"
+			type="string" not-null="true" />
+ 		<property name="email" column="email"
+			type="string" />
+			
+	    <many-to-one
+	        name="userType"
+	        column="userType_id"
+	        class="UserType"
+       />
+       
+	    <many-to-one
+	        name="role"
+	        column="role_id"
+	        class="Role"
+       />
+       			
+ 		<property name="userRealName" column="userRealName"
+			type="string" />
+ 		<property name="userLocation" column="userLocation"
+			type="string" />
+ 		<property name="sex" column="sex"
+			type="character" />	    
+
+	    
+ 		<property name="birthDay" column="birthDay"
+			type="date" />	
+ 		<property name="bloodGroup" column="bloodGroup"
+			type="string" />	
+
+ 		<property name="introduction" column="introduction"
+			type="string" />
+ 		<property name="qq" column="qq"
+			type="string" />
+ 		<property name="address" column="address"
+			type="string" />
+ 		<property name="tel" column="tel"
+			type="string" />
+ 		<property name="job" column="job"
+			type="string" />	
+					
+ 		<property name="credit" column="credit"
+			type="int" />
+ 		<property name="authority" column="authority"
+			type="int" />
+ 		<property name="degree" column="degree"
+			type="int" />
+ 		<property name="state" column="state"
+			type="int" />
+
+ 		<property name="lastLoginTime"
+			type="timestamp" >
+			<column name = "lastLoginTime" sql-type="datetime"/>
+		</property>
+ 		<property name="imgUrl" column="imgurl"
+			type="string" />	
+ 		<property name="miniImgUrl" column="miniimgurl"
+			type="string" />	
+		<set name="friends1"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="friend_id1" />
+	       <one-to-many class="Friend" />
+	    </set>
+
+		<set name="friends2"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="friend_id12" />
+	       <one-to-many class="Friend" />
+	    </set>	  
+	    
+	    <set name="friendApply1"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="friendApply_id1" />
+	       <one-to-many class="FriendApply" />
+	    </set>
+
+		<set name="friendApply2"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="friendApply_id12" />
+	       <one-to-many class="FriendApply" />
+	    </set>
+	    
+		<set name="unreadMessages1"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerSrcUser_id" />
+	       <one-to-many class="UnreadMessage" />
+	    </set>
+
+		<set name="unreadMessages2"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerDesUser_id" />
+	       <one-to-many class="UnreadMessage" />
+	    </set>	    
+	    
+		<set name="readMessages1"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerSrcUser_id" />
+	       <one-to-many class="ReadMessage" />
+	    </set>
+
+		<set name="readMessages2"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerDesUser_id" />
+	       <one-to-many class="ReadMessage" />
+	    </set>	  	
+	    	
+		<set name="coupons"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerUser_id" />
+	       <one-to-many class="Coupon" />
+	    </set>
+ 		
+		
+	    
+ 		<set name="tags"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="registerUser_id" />
+	       <one-to-many class="Tag" />
+	    </set>
+ 		
+ 		<set name="shopInfos"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="seller_id" />
+	       <one-to-many class="ShopInfo" />
+	    </set>
+ 		
+ 		<set name="userGroupTags"
+	       cascade="all-delete-orphan" 
+	       inverse="true">    
+	       <key column="userGroupTag_id" />
+	       <one-to-many class="UserGroupTag" />
+	    </set>
+ 		
+		<!--edit by JH  -->
+		<set name="groupInvatations1"
+	       cascade="all-delete-orphan" 
+	       inverse="true">
+	       
+	       <key column="registerUser1_id" />
+	       <one-to-many class="GroupInvatation" />
+	    </set>
+		<set name="groupInvatations12"
+	       cascade="all-delete-orphan" 
+	       inverse="true">
+	       
+	       <key column="registerUser12_id" />
+	       <one-to-many class="GroupInvatation" />
+	    </set>		
+						
+		
+		<!--edit by JH END  -->
+		
+		<set name="groupMembers"
+	       cascade="all-delete-orphan" 
+	       inverse="true">
+		<key column="registerUser_id" />
+	       <one-to-many class="GroupMember" />
+	    </set>		
+		  <!--关注者set  -->
+           <set name="idols" cascade="all" inverse="true">
+             <key column="userid1" not-null="true"/>
+             <one-to-many class="Focus"/>
+           </set>
+           <!--被关注者set  -->
+           <set name="owners" cascade="all" inverse="true">
+             <key column="userid2" />
+             <one-to-many class="Focus"/>
+           </set>
+           <!-- 一个用户对应多条微博信息 -->
+           <set name="weiBos" cascade="all" inverse="true">
+              <key column="registerUser_id"/>
+              <one-to-many class="WeiBo"/>
+            </set>
+          <!--一个注册用户对应多个商品微博  -->
+            <set name="shopBlogs" cascade="all" inverse="true">
+              <key column="registerUser_id"/>
+              <one-to-many class="ShopBlog"/>
+            </set>
+            
+	  
+		
+		
+		<set 
+	       name="exchangedCous"
+	       cascade="all-delete-orphan" 
+	       inverse="true">
+	       
+	       <key column="registerUser_id" />
+	       <one-to-many class="ExchangedCou" />
+	    </set>
+	    							
+	    <property name = "dateCreated" type = "timestamp" >
+	    	<column name = "dateCreated"  />
+	    </property>
+  	<property name="msgId" column="msgId" type="long"/>	
+	</class>
+</hibernate-mapping>

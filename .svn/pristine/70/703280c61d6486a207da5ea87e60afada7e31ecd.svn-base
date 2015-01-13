@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Struts2配置文件的DTD信息 -->
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- Struts2配置文件的根元素 -->
+<struts>
+	<!-- 配置了系列常量 -->
+	<constant name="struts.custom.i18n.resources" value="resource"/>
+	<constant name="struts.i18n.encoding" value="GBK"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.multipart.saveDirg" value="d:\\temp" />
+	<package name="default"  extends="json-default">
+
+		<!-- 定义全局Result映射 -->
+		<global-results>
+			<!-- 定义root两个异常对应的视图页 -->
+			<result name="root">/admin/result.jsp?result=error</result>
+		</global-results>
+
+		<!-- 定义全局异常映射 -->
+		<!-- 当Action中遇到Exception异常时，系统将转入name为root的结果中 -->
+	 <!--  
+		<global-exception-mappings>
+
+			<exception-mapping exception="java.lang.Exception" 
+				result="root"/>
+		</global-exception-mappings>
+	-->
+
+		<!-- 配置Action -->
+	<action name="test" 
+			class="com.huawei.action.TestAction">	
+			<result type="json" >
+			</result>
+		</action>
+
+		<action name="listRegisterUser" 
+			class="com.huawei.action.RegisterUserAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*RegisterUser" 
+			class="com.huawei.action.RegisterUserAction" method="{1}">
+		<result >/admin/result.jsp?action={1}&amp;result=ok</result>
+		<result name="existed">/admin/result.jsp?action={1}&amp;result=existed</result>
+		</action>
+
+		<action name="loginUser" 
+			class="com.huawei.action.RegisterUserAction" method="login">
+		<result>/admin/result.jsp?action=login&amp;result=ok</result>	
+		<result name = "login">/admin/result.jsp?action=login&amp;result=error</result>
+		</action>		
+		
+		<action name="listShopInfo" 
+			class="com.huawei.action.ShopInfoAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="listShopAround" 
+			class="com.huawei.action.ShopInfoAction" method="listShopAround">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="listShopComment" 
+			class="com.huawei.action.ShopCommentAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="*ShopComment" 
+			class="com.huawei.action.ShopCommentAction" method="{1}">	
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*ShopInfo" 
+			class="com.huawei.action.ShopInfoAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		<!-- 查看商铺详情 -->
+		<action name="showShopInfoDetail" 
+			class="com.huawei.action.ShopInfoAction" method="showShopInfoDetail">	
+			<result type="json" >
+			</result>
+		</action>	
+		<!-- 粉丝统计 -->
+		<action name="fansCount" 
+			class="com.huawei.action.ShopInfoAction" method="fansCount">	
+			<result type="json" >
+			</result>
+		</action>			
+		
+			
+		<action name="listTag" 
+			class="com.huawei.action.TagAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="listRand" 
+			class="com.huawei.action.TagAction" method="listRand">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="groupShop" 
+			class="com.huawei.action.ShopInfoAction" method="groupShop">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Tag" 
+			class="com.huawei.action.TagAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		
+		<action name="listCoupon" 
+			class="com.huawei.action.CouponAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="listSellerCoupon" 
+			class="com.huawei.action.CouponAction" method="listSeller">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Coupon" 
+			class="com.huawei.action.CouponAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+			
+		<action name="listExchangedCou" 
+			class="com.huawei.action.ExchangedCouAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="listMyExchangedCou" 
+			class="com.huawei.action.ExchangedCouAction" method="listMyExchangedCou">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*ExchangedCou" 
+			class="com.huawei.action.ExchangedCouAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		
+		<action name="listUserGroupTag" 
+			class="com.huawei.action.UserGroupTagAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*UserGroupTag" 
+			class="com.huawei.action.UserGroupTagAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>		
+		
+		<action name="listFriend" 
+			class="com.huawei.action.FriendAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<action name="searchFriendByUserName" 
+			class="com.huawei.action.FriendAction" method="searchByUserName">	
+			<result type="json" >
+			</result>
+		</action>
+
+		<action name="listAllFriend" 
+			class="com.huawei.action.FriendAction" method="listAllFriend">	
+			<result type="json" >
+			</result>
+		</action>
+				
+		<action name="listExsitedFriendByUserName" 
+			class="com.huawei.action.FriendAction" method="listExsitedFriendByUserName">	
+			<result type="json" >
+			</result>
+		</action>
+		
+
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Friend" 
+			class="com.huawei.action.FriendAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>
+	 <result name="existed">/admin/result.jsp?action={1}&amp;result=existed</result>	
+		</action>		
+		
+		<action name="modifyFriendAuthority" 
+			class="com.huawei.action.FriendAction" method="modify">
+		<result>/admin/result.jsp?action=modify&amp;result=ok</result>	
+		</action>		
+		
+		<action name="listFriendApply" 
+			class="com.huawei.action.FriendApplyAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*FriendApply" 
+			class="com.huawei.action.FriendApplyAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+		
+		<action name="listReadMessage" 
+			class="com.huawei.action.ReadMessageAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*ReadMessage" 
+			class="com.huawei.action.ReadMessageAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+		
+			<action name="listUnreadMessage" 
+			class="com.huawei.action.UnreadMessageAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*UnreadMessage" 
+			class="com.huawei.action.UnreadMessageAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		<result name="NotIn">/admin/result.jsp?action={1}&amp;result=NotIn</result>	
+		</action>	
+		
+		
+		<action name="listIdol" 
+			class="com.huawei.action.FocusAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Idol" 
+			class="com.huawei.action.FocusAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>
+		<result name="existedFocus">/admin/result.jsp?action=add&amp;result=existedFocus</result>
+		<result name="existedIdol">/admin/result.jsp?action=existedIdol&amp;result=existedIdol</result>	
+		</action>	
+		
+		<action name="listWeiBoDetail" 
+			class="com.huawei.action.WeiBoAction" method="listDetail">	
+			<result type="json" >
+			</result>
+		</action>
+			
+		<action name="listWeiBo" 
+			class="com.huawei.action.WeiBoAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="addFaq" 
+			class="com.huawei.action.FaqAction" method="addFaq">
+		<result>index.html</result>	
+		</action>	
+		
+		<action name="*Faq" 
+			class="com.huawei.action.FaqAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+		
+		<action name="listFaq" 
+			class="com.huawei.action.FaqAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*WeiBo" 
+			class="com.huawei.action.WeiBoAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+			
+		<action name="listShopBlog" 
+			class="com.huawei.action.ShopBlogAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*ShopBlog" 
+			class="com.huawei.action.ShopBlogAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>	
+		
+		<action name="listComment" 
+			class="com.huawei.action.CommentAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Comment" 
+			class="com.huawei.action.CommentAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>		
+		
+		<action name="listNotification" 
+			class="com.huawei.action.NotificationAction" method="list">	
+			<result type="json" >
+			</result>
+		</action>
+		
+		<!-- 使用通配符配置对一张表的增加、修改、删除操作 -->
+		<action name="*Notification" 
+			class="com.huawei.action.NotificationAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>		
+			
+		<!--ADD BY JH  -->	
+		<action name="showGroup"
+		    class="com.huawei.action.GroupAction" method="list">
+		    <result type="json"></result>
+		</action>
+		<action name="showGroupDetail"
+		    class="com.huawei.action.GroupAction" method="detail">
+		    <result type="json"></result>
+		</action>
+		<action name="showGroupMember"
+		    class="com.huawei.action.GroupMemberAction" method="list">
+		    <result type="json"></result>
+		</action><!--
+		<action name="showGroupMemberInfo"
+		    class="com.huawei.action.GroupMemberAction" method="info">
+		    <result type="json"></result>
+		</action>
+		
+		--><action name="getGroupInvatation"
+		    class="com.huawei.action.GroupInvatationAction" method="list">
+		    <result type="json"></result>
+		</action>
+		
+		<action name="searchGroup"
+		    class="com.huawei.action.GroupAction" method="search">
+		    <result type="json"></result>
+		</action>
+		
+		
+		<action name="*Group" 
+			class="com.huawei.action.GroupAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		
+		<action name="addGroup" 
+			class="com.huawei.action.GroupAction" method="add">
+		<result>/admin/result.jsp?action=add&amp;result=group</result>	
+		</action>
+		
+		<action name="*GroupInvatation" 
+			class="com.huawei.action.GroupInvatationAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+				
+		<action name="addGroupMember" class="com.huawei.action.GroupMemberAction" method="add">
+		  <result>/admin/result.jsp?action=add&amp;result=ok</result>
+		  <result name="existed">/admin/result.jsp?action=add&amp;result=existed</result>
+		</action>
+		
+		
+		<action name="modifyGroupMember" class="com.huawei.action.GroupMemberAction" method="modify">
+		  <result>/admin/result.jsp?action=modify&amp;result=ok</result>
+		  <result name="error">/admin/result.jsp?action=modify&amp;result=error</result>
+		</action>
+		
+			<action name="deleteGroupMember" class="com.huawei.action.GroupMemberAction" method="delete">
+		  <result>/admin/result.jsp?action=delete&amp;result=ok</result>
+		</action>
+		<!--
+		
+		<action name="*GroupMember" 
+			class="com.huawei.action.GroupMemberAction" method="{1}">
+		<result>/admin/result.jsp?action={1}&amp;result=ok</result>	
+		</action>
+		
+		
+
+		-->
+		<action name="searchConnections"
+		   	class="com.huawei.action.FriendAction" method="searchConnections">
+		<result type="json"></result>
+		</action>
+		
+		<action name="modifyUserPwd" class="com.huawei.action.RegisterUserAction" method="modifyUserPwd">
+		  <result>/admin/result.jsp?action=modify&amp;result=ok</result>
+		  <result name="errorPwd">/admin/result.jsp?action=modify&amp;result=errorPwd</result>
+		</action>
+		
+		
+		<!-- ADD BY JH END -->
+		
+	
+
+		
+		<!-- add by zzq start-->
+        <!-- 修改注册用户信息 -->
+		<action name="modifyUser" class="com.huawei.action.RegisterUserAction" method="modifyBasicInfo">
+		  <result>/admin/result.jsp?action=modify&amp;result=ok</result>
+		  <result name="modusernamefail">/admin/result.jsp?action=modify&amp;result=modusernamefail</result>
+		</action>
+				
+		<!-- 查询好友信息 -->
+		<action name="showFriendDetail" class="com.huawei.action.RegisterUserAction" method="showFriendDetail">
+		  <result type="json"></result>
+		</action>
+		
+		<!-- 搜索通讯录好友 -->
+		<action name="searchPhone" class="com.huawei.action.FriendAction" method="searchPhone">
+		  <result type="json"></result>
+		</action>
+		<action name="uploadHeadPortrait" 
+			class="com.huawei.action.RegisterUserAction" method="uploadHeadPortrait">
+		<result>/admin/result.jsp?action=add&amp;result=ok</result>	
+		</action>		
+		
+		<!-- add by zzq end-->
+				
+		
+		
+		
+		
+
+
+			
+		<!--  不使用通配符的配置方法
+		<action name="addRegisterUser" 
+			class="com.huawei.action.RegisterUserAction" method="add">
+		<result>/admin/result.jsp?action=add&amp;result=ok</result>
+	
+		</action>
+		
+		<action name="modifyRegisterUser" 
+			class="com.huawei.action.RegisterUserAction" method="modify">
+		<result>/admin/result.jsp?action=modify&amp;result=ok</result>
+		<param name="uploadDir">/admin/upload/</param>
+	
+		</action>
+		
+		<action name="deleteRegisterUser" 
+			class="com.huawei.action.RegisterUserAction" method="delete">
+		<result>/admin/result.jsp?action=delete&amp;result=ok</result>
+	
+		</action>
+		-->
+
+	</package>
+</struts>
