@@ -35,30 +35,6 @@
 		<property name="mappingResources">
 			<list>
 				<!-- 以下用来列出Hibernate映射文件 -->
-				<value>com/huawei/domain/RegisterUser.hbm.xml</value>
-				<value>com/huawei/domain/Friend.hbm.xml</value>
-				<value>com/huawei/domain/Focus.hbm.xml</value>
-				<value>com/huawei/domain/WeiBo.hbm.xml</value>
-				<value>com/huawei/domain/ShopBlog.hbm.xml</value>
-				<value>com/huawei/domain/ShopInfo.hbm.xml</value>
-				<value>com/huawei/domain/Tag.hbm.xml</value>
-				<value>com/huawei/domain/Coupon.hbm.xml</value>
-				<value>com/huawei/domain/ExchangedCou.hbm.xml</value>
-				<value>com/huawei/domain/Comment.hbm.xml</value>
-				<value>com/huawei/domain/FriendApply.hbm.xml</value>
-				<value>com/huawei/domain/Group.hbm.xml</value>
-				<value>com/huawei/domain/GroupInvatation.hbm.xml</value>
-				<value>com/huawei/domain/GroupMember.hbm.xml</value>
-				<value>com/huawei/domain/ReadMessage.hbm.xml</value>
-				<value>com/huawei/domain/ShopComment.hbm.xml</value>
-				<value>com/huawei/domain/Topic.hbm.xml</value>
-				<value>com/huawei/domain/TopicInfo.hbm.xml</value>
-				<value>com/huawei/domain/UnreadMessage.hbm.xml</value>
-				<value>com/huawei/domain/Role.hbm.xml</value>
-				<value>com/huawei/domain/UserType.hbm.xml</value>
-				<value>com/huawei/domain/UserGroupTag.hbm.xml</value>
-				<value>com/huawei/domain/Faq.hbm.xml</value>
-				<value>com/huawei/domain/Notification.hbm.xml</value>
 				<value>com/huawei/domain/Sensor.hbm.xml</value>
 			</list>
 		</property>
@@ -102,7 +78,7 @@
 		<aop:pointcut id="leePointcut" 
 
 	
-		expression="bean(registerUserService) || bean(sensorService) || bean(focusService)  || bean(shopBlogService) || bean(userGroupTagService) || bean(shopInfoService) || bean(tagService) || bean(couponService) || bean(exchangedCouService) || bean(friendService) || bean(friendApplyService) ||  bean(readMessageService) || bean(roleService) || bean(shopCommentService) || bean(topicInfoService) || bean(topicService) || bean(unreadMessageService) || bean(userTypeService)|| bean(exchangedCouService)||bean(groupService)||bean(groupInvatationService)||bean(groupMemberService)|| bean(commentService) || bean(weiBoService)|| bean(faqService)|| bean(notificationService)"/>
+		expression="bean(sensorService)"/>
 		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
 		<!-- || bean(groupService) 后续增加  -->
 		<aop:advisor advice-ref="txAdvice" 
@@ -110,123 +86,13 @@
 	</aop:config>
 
 
-	<!-- 定义业务逻辑组件，继承业务逻辑组件的模板 -->
-
-	<bean id="registerUserService"
-		class="com.huawei.service.impl.RegisterUserServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="notificationService" ref="notificationService"></property>
-		<property name="shopInfoService" ref="shopInfoService"></property>
-	</bean>
-	
+	<!-- 定义业务逻辑组件，继承业务逻辑组件的模板 -->	
 	
 	<bean id="sensorService"
 		class="com.huawei.service.impl.SensorServiceImpl">
 		<property name="dao" ref="dao"></property>
 	</bean>
-	<bean id="focusService"
-		class="com.huawei.service.impl.FocusServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>
-	<bean id="weiBoService"
-		class="com.huawei.service.impl.WeiBoServiceImpl">
-		<property name="notificationService" ref="notificationService"></property>
-		<property name="dao" ref="dao"></property>
-	</bean>	
-	<bean id="shopBlogService"
-		class="com.huawei.service.impl.ShopBlogServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>			
-
 	
-	<bean id="userGroupTagService"
-		class="com.huawei.service.impl.UserGroupTagServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>
-	<bean id="shopInfoService"
-		class="com.huawei.service.impl.ShopInfoServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>
-	<bean id="tagService"
-		class="com.huawei.service.impl.TagServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>
-	<bean id="couponService"
-		class="com.huawei.service.impl.CouponServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>	
-	<bean id="exchangedCouService"
-		class="com.huawei.service.impl.ExchangedCouServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="couponService" ref="couponService"></property>
-	</bean>		
-  	
-	<bean id="commentService"
-		class="com.huawei.service.impl.CommentServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="weiBoService" ref="weiBoService"></property>
-		<property name="notificationService" ref="notificationService"></property>
-	</bean>	
-	<bean id="friendService"
-		class="com.huawei.service.impl.FriendServiceImpl">
-		<property name="dao" ref="dao"></property>
-		
-	</bean>		
-	<bean id="friendApplyService"
-		class="com.huawei.service.impl.FriendApplyServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="notificationService" ref="notificationService"></property>
-	</bean>		
-	<bean id="groupInvatationService"
-		class="com.huawei.service.impl.GroupInvatationServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="groupMemberService"
-		class="com.huawei.service.impl.GroupMemberServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="groupService"
-		class="com.huawei.service.impl.GroupServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="readMessageService"
-		class="com.huawei.service.impl.ReadMessageServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="roleService"
-		class="com.huawei.service.impl.RoleServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="shopCommentService"
-		class="com.huawei.service.impl.ShopCommentServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="notificationService" ref="notificationService"></property>
-	</bean>			
-	<bean id="topicInfoService"
-		class="com.huawei.service.impl.TopicInfoServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>	
-	<bean id="topicService"
-		class="com.huawei.service.impl.TopicServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>	
-	<bean id="unreadMessageService"
-		class="com.huawei.service.impl.UnreadMessageServiceImpl">
-		<property name="dao" ref="dao"></property>
-		<property name="readMessageService" ref="readMessageService"></property>
-	</bean>		
-	<bean id="userTypeService"
-		class="com.huawei.service.impl.UserTypeServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="faqService"
-		class="com.huawei.service.impl.FaqServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
-	<bean id="notificationService"
-		class="com.huawei.service.impl.NotificationServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
 	<bean id="service"
 		class="com.huawei.service.impl.ServiceImpl">
 		<property name="dao" ref="dao"></property>
