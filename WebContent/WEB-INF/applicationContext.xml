@@ -86,17 +86,8 @@
 	</aop:config>
 
 
-	<!-- 定义业务逻辑组件，继承业务逻辑组件的模板 -->	
 	
-	<bean id="sensorService"
-		class="ll.service.impl.SensorServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>
 	
-	<bean id="service"
-		class="ll.service.impl.ServiceImpl">
-		<property name="dao" ref="dao"></property>
-	</bean>		
 
 		<!-- 注意要记得配置 expression="bean(registerUserService)" 这个 -->
 		
